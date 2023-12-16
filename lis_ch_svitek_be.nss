@@ -1,0 +1,18 @@
+//::///////////////////////////////////////////////
+//:: FileName lis_ch_svitek_tr
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+//:: Created By: Script Wizard
+//:: Created On: 13.2.2005 20:41:49
+//:://////////////////////////////////////////////
+#include "nw_i0_tool"
+
+int StartingConditional()
+{
+
+    // Ujistit se, že postava má v inventáøi tyto pøedmìty
+    if(!HasItem(GetPCSpeaker(), "liv_ch_svitek_beho"))
+        return FALSE;
+
+    return TRUE;
+}

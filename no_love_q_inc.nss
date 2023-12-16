@@ -1,0 +1,167 @@
+// iniciace. Musi obsahovat pocet surovin, ktere se vykupuji, jestli neco chybi.. srry :D
+
+const int pocet_surovin = 77;
+
+const int id_Bleskoveohnisko = 1;
+const int id_Drahokamcirehozla = 2;
+const int id_Drevoprastarehodubu = 3;
+const int id_Hlasivkysireny = 4;
+const int id_Hlavaprastarehourozenehotroloka = 5;
+const int id_Hlavastarehoorka = 6;
+const int id_Hlavaurozenerakshasy = 7;
+const int id_Hlavavudceyettiu = 8;
+const int id_Kladelkokralovnyformianu = 9;
+const int id_Krevprvnihoupira = 10;
+const int id_Krovkykralovnybroukuohnivaku = 11;
+const int id_Krunyrsamicecernehostira = 12;
+const int id_Krunyrsamicerudehostira = 13;
+const int id_Krunyrstarehohakovce = 14;
+const int id_Krunyrstingera = 15;
+const int id_Kuzesamicealansijskehotygra = 16;
+const int id_Kuzecernehodraka = 17;
+const int id_Kuzeledovehodraka = 18;
+const int id_Kuzemodrehodraka = 19;
+const int id_Kuzeohnivehodraka = 20;
+const int id_Kuzeohnivehowyrma = 21;
+const int id_Kuzestarezurivegorily = 22;
+const int id_Kuzezelenehodraka = 23;
+const int id_Kuzezlatehodraka = 24;
+const int id_Kyseleohnisko = 25;
+const int id_Lebkademilicha = 26;
+const int id_Lebkapanavlkodlaku = 27;
+const int id_Lebkaprastareholicha = 28;
+const int id_Lebkastareholicha = 29;
+const int id_Magickeohnisko = 30;
+const int id_Mozekklepetnatcepsyonika = 31;
+const int id_Mozekstarsihomozkomora = 32;
+const int id_Mozkomysnimokstarehoklepetnatceokroveho = 33;
+const int id_Okovelkehoorbu = 34;
+const int id_OkoVsevidouciho = 35;
+const int id_Ostnystarehodrapatce = 36;
+const int id_Paratvlkodlacihovelekneze = 37;
+const int id_Pirkoerynie = 38;
+const int id_PirkomladeErinye = 39;
+const int id_Posvatnykamen = 40;
+const int id_Slinyohnivehoslaada = 41;
+const int id_Slizhnilovnika = 42;
+
+
+///////////////////pridano 7.srpna ///////////////////////
+const int id_Mitrilovygolem = 43;
+const int id_Prvnizprastarych = 44;
+const int id_Bilyslaad = 45;
+const int id_Demoniprinc = 46;
+const int id_Harpyjematriarcha = 47;
+const int id_Staryelementalkyseliny = 48;
+const int id_Nacelnikkyklopu = 49;
+const int id_Nacelnikohnivcu = 50;
+const int id_Kralsalamandru = 51;
+const int id_Puldrak = 52;
+const int id_Staryelementalohne = 53;
+const int id_Staryelementalvody = 54;
+const int id_Trolinacelnik = 55;
+const int id_Vudceprastarychvlku = 56;
+const int id_Vladcestinu =57;
+const int id_Obrimutant = 58;
+const int id_Padlabojovnice = 59;
+const int id_Kralovnacelistnatek = 60;
+const int id_Nacelnikvzdusnychelementalu =61;
+const int id_Starymykoid = 62;
+const int id_Pekelnyzplozenec = 63;
+const int id_Samanpralesnichtrollu = 64;
+///////////////////////////pridano 11.2:2009////////////////
+const int id_Starydrider = 65;
+const int id_Zlobriarcimag =66;
+const int id_ledovywyrm = 67;
+const int id_Balor = 68;
+const int id_Temnydruid = 69;
+const int id_Veleknezkapaniledu = 70;
+const int id_samankyselinovychliliputu = 71;
+const int id_pankamene = 72;
+const int id_Belibith = 73;
+const int id_Kapitanpalacovestraze = 74;
+const int id_ld_asabi_hlava = 75; //Hlava vudce Asabi
+const int id_ld_laerti_luk = 76; //Luk zrudy Laerti
+const int id_ld_sarrukh_kuz = 77; // Kuze Sarukha
+
+
+
+const string resref_Bleskoveohnisko = "kh_beskohnisko";
+const string resref_Drahokamcirehozla = "kh_gemzla2";
+const string resref_Drevoprastarehodubu = "kh_prastardub";
+const string resref_Hlasivkysireny = "kh_hlassireny";
+const string resref_Hlavaprastarehourozenehotroloka = "ry_prurtr_hlava";
+const string resref_Hlavastarehoorka = "ry_ork_hlava";
+const string resref_Hlavaurozenerakshasy = "ry_raks_hl";
+const string resref_Hlavavudceyettiu = "ry_yetti_hlava";
+const string resref_Kladelkokralovnyformianu = "ry_form_klad";
+const string resref_Krevprvnihoupira = "ry_prvup_krev";
+const string resref_Krovkykralovnybroukuohnivaku = "kh_krovohnivkral";
+const string resref_Krunyrsamicecernehostira = "ry_cerstsam_krun";
+const string resref_Krunyrsamicerudehostira = "ry_rudstsam_krun";
+const string resref_Krunyrstarehohakovce = "ry_hak_krunyr_bs";
+const string resref_Krunyrstingera = "ry_sting_kr";
+const string resref_Kuzesamicealansijskehotygra = "kuzesamiceala001";
+const string resref_Kuzecernehodraka = "ry_cerdr_kuze";
+const string resref_Kuzeledovehodraka = "ry_leddr_kuze";
+const string resref_Kuzemodrehodraka = "ry_moddr_kuze";
+const string resref_Kuzeohnivehodraka = "ry_ohndr_kuze";
+const string resref_Kuzeohnivehowyrma = "ry_ohnwyrm_kuze";
+const string resref_Kuzestarezurivegorily = "ry_stzur_kuze";
+const string resref_Kuzezelenehodraka = "ry_zeldr_kuze";
+const string resref_Kuzezlatehodraka = "ry_zldr_kuze";
+const string resref_Kyseleohnisko = "kh_kysohnisko";
+const string resref_Lebkademilicha = "kh_lepdemilicha";
+const string resref_Lebkapanavlkodlaku = "ry_vlkod_lebka";
+const string resref_Lebkaprastareholicha = "ry_leb_prast_lic";
+const string resref_Lebkastareholicha = "kh_lebstarlich";
+const string resref_Magickeohnisko = "kh_magohnisko";
+const string resref_Mozekklepetnatcepsyonika = "ry_klpsyon_moz";
+const string resref_Mozekstarsihomozkomora = "kh_mozstarmoz2";
+const string resref_Mozkomysnimokstarehoklepetnatceokroveho = "ry_klep_mok";
+const string resref_Okovelkehoorbu = "ry_velkyorb_oko";
+const string resref_OkoVsevidouciho = "kh_okovsevid2";
+const string resref_Ostnystarehodrapatce = "ry_drapat_ostrny";
+const string resref_Paratvlkodlacihovelekneze = "ry_par_velekn";
+const string resref_Pirkoerynie = "ry_erinie_pirko";
+const string resref_PirkomladeErinye = "ry_erinie_pir_2";
+const string resref_Posvatnykamen = "kh_posvetkamen2";
+const string resref_Slinyohnivehoslaada = "ry_ohslaad_kr";
+const string resref_Slizhnilovnika = "ry_hnil_sliz";
+
+///////////////////pridano 7.srpna ///////////////////////
+const string resref_Mitrilovygolem = "me_misc_soumgol";
+const string resref_Prvnizprastarych = "ry_src_prvlk";
+const string resref_Bilyslaad = "kh_srdcebslaad";
+const string resref_Demoniprinc = "kh_srdcedemona";
+const string resref_Harpyjematriarcha = "ry_harmatr_srd";
+const string resref_Staryelementalkyseliny = "ry_srdce_kys";
+const string resref_Nacelnikkyklopu = "kh_srdcenackyk";
+const string resref_Nacelnikohnivcu = "kh_srdcohniv2";
+const string resref_Kralsalamandru = "ry_srdce_ohne";
+const string resref_Puldrak = "kh_srdcepuldraka";
+const string resref_Staryelementalohne = "ry_srd_elemohn";
+const string resref_Staryelementalvody = "ry_elvb_srdce";
+const string resref_Trolinacelnik = "me_misc_srdtrch";
+const string resref_Vudceprastarychvlku = "kh_srdcepravlk";
+const string resref_Vladcestinu = "ry_vlst_esence";
+const string resref_Obrimutant = "kh_supmutanta2";
+const string resref_Padlabojovnice = "ry_temnokam";
+const string resref_Kralovnacelistnatek = "ry_pavkr_vl";
+const string resref_Nacelnikvzdusnychelementalu = "ry_vzdus_prach";
+const string resref_Starymykoid = "ry_zrspor_myk";
+const string resref_Pekelnyzplozenec = "ry_pekzpl_zub";
+const string resref_Samanpralesnichtrollu = "ry_pr_tr_hlava";
+
+///////////////////////////pridano 11.2:2009////////////////
+const string resref_Starydrider = "ry_drider_hl";
+const string resref_Zlobriarcimag ="ry_zlobrarc_hlav";
+const string resref_ledovywyrm = "ry_ledwyrm_kuze";
+const string resref_Balor = "ry_balor_lebka";
+const string resref_Temnydruid = "ry_ritual_maska";
+const string resref_Veleknezkapaniledu = "ry_tr_led_orb";
+const string resref_samankyselinovychliliputu = "ry_kys_liliput";
+const string resref_pankamene = "ry_src_pankam";
+const string resref_Belibith = "ry_bel_krunyr";
+const string resref_Kapitanpalacovestraze = "ry_helm_kapstr";
+

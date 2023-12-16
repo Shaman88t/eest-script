@@ -1,0 +1,20 @@
+//::///////////////////////////////////////////////
+//:: XP2 Ammo Treasure Spawn Script   LOW
+//:: Copyright (c) 2003 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Spawns in ammo
+
+*/
+//:://////////////////////////////////////////////
+//:: Created By:   Georg Zoeller
+//:: Created On:   2003-06-04
+//:://////////////////////////////////////////////
+#include "NW_O2_CONINCLUDE"
+
+void main()
+
+{
+    ExecuteScript( "nw_o2_classlow", OBJECT_SELF );
+
+}
