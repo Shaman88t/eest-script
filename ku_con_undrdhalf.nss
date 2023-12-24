@@ -9,8 +9,7 @@ int StartingConditional()
 {
   object oPC = GetPCSpeaker();
 
-  if( (Subraces_GetIsCharacterFromUnderdark(oPC ) == 1            ) &&
-      (!Subraces_IsCharacterOfSubrace(oPC, SUBRACE_HALFLING_DEEP) ) )
+  if (Subraces_GetIsCharacterFromUnderdark(oPC ) == 1            )
     return TRUE;
   else
     return FALSE;

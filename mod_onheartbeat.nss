@@ -87,11 +87,6 @@ if(t % time_update_locations == 0){
             Subraces_ModuleHeartBeatPC(oPC);
         }
 
-        if(iActRound == 2 )
-        {
-            ku_CheckXPStop(oPC);
-            ku_GiveXPPerTime(oPC);
-        }
 //kk
         // system potreby jidla a piti
         if(t % time_pc_needs == 0){

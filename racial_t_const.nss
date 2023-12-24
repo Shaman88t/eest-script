@@ -1,0 +1,14 @@
+const int RACIAL_TYPE_PIXIE = 53;
+const int RACIAL_TYPE_DUERGAR = 54;
+const int RACIAL_TYPE_DROW = 55;
+const int RACIAL_TYPE_SVIRFNEBLIN = 56;
+const int RACIAL_TYPE_AASIMAR = 57;
+const int RACIAL_TYPE_TIEFLING = 58;
+const int RACIAL_TYPE_GOLD_DWARF = 65;
+const int RACIAL_TYPE_SUN_ELF = 66;
+const int RACIAL_TYPE_WILD_ELF= 67;
+const int RACIAL_TYPE_AVARIEL = 68;
+const int RACIAL_TYPE_EAST_ELF = 69;
+const int RACIAL_TYPE_EAST_HUMAN = 70;
+
+

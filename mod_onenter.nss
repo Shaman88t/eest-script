@@ -3,7 +3,6 @@
 #include "zep_inc_phenos"
 #include "ja_inc_stamina"
 #include "me_pcneeds_inc"
-#include "ja_inc_frakce"
 #include "ku_libbase"
 #include "subraces"
 #include "nwnx_item"
@@ -64,16 +63,6 @@ void UnspellItems(object oPC){
 
 }
 
-void FixMovementSpeed(object oPC) {
-  int iSubrace = Subraces_GetCharacterSubrace(oPC);
-  if(iSubrace == SUBRACE_HALFORC_HALFOGRE ||
-     iSubrace == SUBRACE_HALFORC_BLACK_HALFOGRE ||
-     iSubrace == SUBRACE_HALFLING_KOBOLD) {
-
-    NWNX_Creature_SetMovementRate(oPC,NWNX_CREATURE_MOVEMENT_RATE_PC);
-  }
-}
-
 void AddPlayerToDump(object oPC){
     string sPC = SQLEncodeSpecialChars(GetName(oPC));
     int iID    = GetLocalInt(GetModule(), "JA_DUMP_ID");
@@ -112,28 +101,6 @@ void UpdateLoginIP(object oPC) {
      string IP     = GetPCIPAddress(oPC);
      string sql = "UPDATE pwplayers SET ip_last_logged = '"+IP+"' WHERE login='"+Player+"';";
      SQLExecDirect(sql);
-}
-
-// Set dislike to all PCs of oposite faction (underdark/surf)
-void DislikeFactions(object oPC) {
-  object oSoul = GetSoulStone(oPC);
-  int iAutodislike = GetLocalInt(oSoul,"KU_AUTODISLIKE");
-
-
-  int iUnderdark = Subraces_GetIsCharacterFromUnderdark(oPC);
-  object oTarget = GetFirstPC();
-  int iFaction = NWNX_Creature_GetFaction (oPC);
-  while(GetIsObjectValid(oTarget)) {
-
-    if(iAutodislike || GetLocalInt(GetSoulStone(oTarget),"KU_AUTODISLIKE")) {
-      if(NWNX_Creature_GetFaction (oTarget) != iFaction &&
-         Subraces_GetIsCharacterFromUnderdark(oTarget) != iUnderdark) {
-        SetPCDislike(oPC,oTarget);
-      }
-    }
-    oTarget = GetNextPC();
-  }
-
 }
 
 void main()
@@ -223,10 +190,8 @@ void main()
 
  AddPlayerToDump(oPC);
 
- setFactionsToPC(oPC, getFaction(oPC));
  ku_OnClientEnter(oPC); // Inicializace eXPiciho systemu pri loginu hrace.
  Subraces_InitSubrace( oPC ); //Inicializace subrasy
- KU_CalcAndGiveSkillPoints(oPC); //Nastav postave spravne volne skillpointy
 
  object oSoul = GetSoulStone(oPC);
  SetLocalInt(oPC,"SUBDUAL_MODE",GetLocalInt(oSoul,"SUBDUAL_MODE"));
@@ -363,13 +328,9 @@ void main()
 
  DelayCommand(1.0, CheckHasSpecialItems(oPC));
 
-// Set dislike automagicaly
- DelayCommand(60.0, DislikeFactions(oPC));
-
 // ExecuteScript("cnr_module_oce", OBJECT_SELF);
 
   /* Bugfixy */
   DeleteLocalInt(oPC,"ku_sleeping");
   DeleteLocalInt(oPC,"KU_DEATH_NOLOG");
-  DelayCommand(10.0,FixMovementSpeed(oPC));
 }

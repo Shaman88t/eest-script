@@ -14,6 +14,5 @@
 void main()
 {
     Subraces_InitSubraces();
-    Subraces_SetDefaultAreaSettings( AREA_DARK + SEI_AREA_UNDERGROUND );
 }
 

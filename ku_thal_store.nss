@@ -10,8 +10,7 @@ void main()
     if(Subraces_GetIsCharacterFromUnderdark(oPC ) == 1 )
       sShop = "li_podtemno";
 
-    if( (Subraces_IsCharacterOfSubrace(oPC, SUBRACE_ELF_DROW_ARISTOCRAT) ) ||
-      (Subraces_IsCharacterOfSubrace(oPC, SUBRACE_ELF_DROW           ) ) )
+    if(GetRacialType(oPC)==RACIAL_TYPE_DROW)
       sShop = "li_drow";
 
     object oStore = GetNearestObjectByTag(sShop);

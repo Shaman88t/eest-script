@@ -14,68 +14,12 @@
 
 // Include the subrace definitions and the subraces code.
 #include "sei_subraces"
-#include "sei_subraceslst"
 #include "aps_include"
 //#include "sei_xp"   //removed by Kucik
 
 
 
 //  END KUCIK
-
-int AREA_NONE                       =   0;
-int AREA_DEFAULT_LIGHT              =   1;
-int AREA_DARK                       =   2;
-int AREA_LIGHT                      =   3;
-int AREA_SUN                        =   4;
-int AREA_DEFAULT_GROUND             =  10;
-int SEI_AREA_UNDERGROUND            =  20;
-int SEI_AREA_ABOVEGROUND            =  30;
-int KU_AREA_DEFAULT                 = 100;
-int KU_AREA_SURFACE                 = 200;
-int KU_AREA_UNDERDARK               = 300;
-
-// **************************************************************
-// ** Structures
-// **********************
-
-// Structure used to pass information on a certain subrace.
-struct Subrace
-{
-    int m_nID;
-    int m_nBaseRace;
-    int m_nNumFieldValues;
-    int m_nNumTraits;
-    int m_bSpellResistance;
-    int m_nLightSensitivity;
-    float m_fLightBlindness;
-    int m_nStonecunning;
-    int m_nSpellLikeAbility;
-    int m_nECLAdd;
-    int m_nFavoredClassF;
-    int m_nFavoredClassM;
-    int m_bIsDefault;
-
-//  ADDED BY KUCIK
-    int m_nECLClass;
-    int m_nSpellResistanceConst;
-    int m_nSpellResistancePerLevel;
-    int m_bIsUnderdark;
-    int m_nAlignmentMask;
-    int m_bInterionPenalty;
-    int m_nWingType;
-    int m_nWingLevel;
-    int m_nTailType;
-    int m_nTailLevel;
-    int m_nChangeAppearance;
-//  END KUCIK
-};
-
-
-const int PEVNINAN = 0;
-const int PODTEMNAN = 1;
-const int PRITEL = 2;
-const int OTROK = 3;
-
 
 // **************************************************************
 // ** Event functions
@@ -146,31 +90,6 @@ void Subraces_OnEnterArea( object a_oCharacter, int a_nSettings = 0 );
 // ** Useage functions
 // **********************
 
-// Returns the subrace (enum) for the target.
-//  ARGUMENTS:
-//      a_oCharacter    = The character to get the subrace from (assumed valid)
-//  RESULT:
-//      The subrace of a_oCharacter (see te "SUBRACE_" variables)
-//
-int Subraces_GetCharacterSubrace( object a_oCharacter );
-
-
-// Returns whether the character is of subrace a_nSubrace.
-//  ARGUMENTS:
-//      a_oCharacter    = The character to get the subrace from (assumed valid)
-//      a_nSubrace      = The subrace to check against
-//  RESULT:
-//      Whether a_oCharacter is of subrace a_nSubrace
-//
-int Subraces_IsCharacterOfSubrace( object a_oCharacter, int a_nSubrace );
-
-
-// Returns the effective character level of the character.
-//  ARGUMENTS:
-//      a_oCharacter    = The character to get the ECL from (assumed valid)
-//
-int Subraces_GetEffectiveCharacterLevel( object a_oCharacter );
-
 
 // Returns if is character from underdark
 // return 1 if yes
@@ -180,32 +99,6 @@ int Subraces_GetEffectiveCharacterLevel( object a_oCharacter );
 //
 int Subraces_GetIsCharacterFromUnderdark( object a_oCharacter );
 
-
-// Remove subrace related items before starting a new module.
-// If the new module supports subraces it should re-initialize them.
-//  ARGUMENTS:
-//      a_sModuleName   = The name of the module to start.
-//
-void Subraces_StartNewModule( string a_sModuleName );
-
-
-// Remove subrace related items before sending PC through protal.
-// If the new server supports subraces it should re-initialize them.
-//  ARGUMENTS:
-//      a_oTarget       = The character to send through the portal.
-//      a_sIPaddress    = This can be numerical "192.168.0.84" or alphanumeric
-//                        "www.bioware.com". It can also contain a port
-//                        "192.168.0.84:5121" or "www.bioware.com:5121"; if the
-//                        port is not specified, it will default to 5121.
-//      a_sPassword     = Login password for the destination server.
-//      a_sWaypointTag  = If this is set, after portalling the character will be
-//                        moved to this waypoint if it exists.
-//      a_bSeamless     = If this is set, the client wil not be prompted with
-//                        the information window telling them about the server,
-//                        and they will not be allowed to save a copy of their
-//                        character if they are using a local vault character.
-//
-void Subraces_ActivatePortal( object a_oTarget, string a_sIPaddress="", string a_sPassword="", string a_sWaypointTag="", int a_bSeemless=FALSE );
 
 
 // Change the area settings dependent traits for the character.
@@ -228,18 +121,6 @@ void Subraces_ChangeAreaSettings( object a_oCharacter, int a_nSettings = 0 );
 //
 void Subraces_SafeRemoveEffect( object a_oCreature, effect a_eEffect );
 
-
-// A subrace safe version that removes all non-subrace effects from the char.
-//  ARGUMENTS:
-//      a_oCreature     = The creature to remove the effect from.
-//
-void Subraces_SafeRemoveEffects( object a_oCreature );
-
-// Check if was changed day/night
-// Execute it in ModuleHeartbeat as often as you want
-//
-void Subraces_ModuleHeartBeat();
-
 // heartbeat jen pro jedno pc
 // pridano melvik > optimalizace
 void Subraces_ModuleHeartBeatPC(object oPC);
@@ -260,29 +141,11 @@ void Subraces_InitSubraces()
 }
 
 
-// Sets the default area settings. This is so you don't have to do it for every area.
-//
-void Subraces_SetDefaultAreaSettings( int a_nSettings )
-{
-    SEI_SetDefaultAreaSettings( a_nSettings );
-}
-
-
 // Initializes the subrace for character a_oCharacter.
 //
 void Subraces_InitSubrace( object a_oCharacter )
 {
-    if(SUBRACE_DEBUG)
-      SendMessageToPC(a_oCharacter, "Nastavuji subrasu. "+GetName(OBJECT_SELF));
-    DeleteLocalInt(a_oCharacter, GROUND_SETTING );
-    object oPermEffect = GetLocalObject(GetModule(),KU_SUBRACES_PERM_FIELD);
-    AssignCommand( oPermEffect, SEI_InitSubrace( a_oCharacter ) );
-//    SEI_InitSubrace( a_oCharacter );
-    if(SUBRACE_DEBUG)
-      SendMessageToPC(a_oCharacter,"Subrasa nastavena.");
 
-    // Dopocitej skillpointy
-    KU_CalcAndGiveSkillPoints(a_oCharacter);
 }
 
 
@@ -290,7 +153,7 @@ void Subraces_InitSubrace( object a_oCharacter )
 //
 void Subraces_LevelUpSubrace( object a_oCharacter )
 {
-    SEI_LevelUpSubrace( a_oCharacter );
+
 }
 
 
@@ -298,7 +161,7 @@ void Subraces_LevelUpSubrace( object a_oCharacter )
 //
 void Subraces_RespawnSubrace( object a_oCharacter )
 {
-    SEI_InitSubrace( a_oCharacter );
+
 }
 
 
@@ -308,13 +171,7 @@ void Subraces_OnEnterArea( object a_oCharacter, int a_nSettings = 0 )
 {
 
     object oArea = GetArea(a_oCharacter);
-    // Use JA_LOC_TYPE variable to set area environment
-    if(a_nSettings == 0) {
-      a_nSettings=ku_CountAreaEnvSettings(oArea);
-    }
-    if(SUBRACE_DEBUG)
-      SendMessageToPC(GetFirstPC(),"area setting " + IntToString(a_nSettings));
-    SEI_EnterArea( a_oCharacter, oArea, a_nSettings );
+    SEI_EnterArea( a_oCharacter, oArea );
 }
 
 // Does some subrace specific things when a character enters a new area.
@@ -322,48 +179,9 @@ void Subraces_OnEnterArea( object a_oCharacter, int a_nSettings = 0 )
 void KU_Subraces_OnEnterArea( object a_oCharacter, int a_nSettings = 0 )
 {
     object oArea = GetArea(a_oCharacter);
-    // Use JA_LOC_TYPE variable to set area environment
-    if(a_nSettings == 0) {
-      a_nSettings=ku_CountAreaEnvSettings(oArea);
-    }
-    if(SUBRACE_DEBUG)
-      SendMessageToPC(GetFirstPC(),"area setting " + IntToString(a_nSettings));
-
-//    object oExecutor = GetObjectByTag(KU_SUBRACES_AREA_TAG);
     object oMod = GetModule();
-//    object oExecutor = a_oCharacter;
     object oExecutor = GetLocalObject(oMod,KU_SUBRACES_AREA_FIELD);
-/*    SetLocalObject(oExecutor,"KU_CHARAKTER",a_oCharacter);
-    SetLocalObject(oExecutor,"KU_AREA",oArea);
-    SetLocalInt(oExecutor,"KU_AREA_SETTINGS",a_nSettings);
-    ExecuteScript("ku_apply_area_s",oExecutor);
-*/
-
-    AssignCommand( oExecutor, SEI_EnterArea( a_oCharacter, oArea, a_nSettings ) );
-//    SEI_EnterArea( a_oCharacter, oArea, a_nSettings );
-}
-
-// Returns the subrace (enum) for the target.
-//
-int Subraces_GetCharacterSubrace( object a_oCharacter )
-{
-    return SEI_GetCharacterSubrace( a_oCharacter );
-}
-
-
-// Returns whether the character is of subrace a_nSubrace.
-//
-int Subraces_IsCharacterOfSubrace( object a_oCharacter, int a_nSubrace )
-{
-    return SEI_IsCharacterOfSubrace( a_oCharacter, a_nSubrace );
-}
-
-
-// Returns the effective character level of the character.
-//
-int Subraces_GetEffectiveCharacterLevel( object a_oCharacter )
-{
-    return SEI_GetEffectiveCharacterLevel( a_oCharacter );
+    AssignCommand( oExecutor, SEI_EnterArea( a_oCharacter, oArea ) );
 }
 
 // Returns if the character is from underdark.
@@ -374,34 +192,11 @@ int Subraces_GetIsCharacterFromUnderdark( object a_oCharacter )
 }
 
 
-// Remove subrace related items before starting a new module.
-//
-void Subraces_StartNewModule( string a_sModuleName )
-{
-    object oPC = GetFirstPC();
-    while( GetIsObjectValid( oPC ) )
-    {
-        SEI_RemoveSubrace( oPC );
-        oPC = GetNextPC();
-    }
-    StartNewModule( a_sModuleName );
-}
-
-
-// Remove subrace related items before sending PC through protal.
-//
-void Subraces_ActivatePortal( object a_oTarget, string a_sIPaddress="", string a_sPassword="", string a_sWaypointTag="", int a_bSeemless=FALSE )
-{
-    SEI_RemoveSubrace( a_oTarget );
-    ActivatePortal( a_oTarget, a_sIPaddress, a_sPassword, a_sWaypointTag, a_bSeemless );
-}
-
-
 // Change the area settings dependent traits for the character.
 //
 void Subraces_ChangeAreaSettings( object a_oCharacter, int a_nSettings = 0 )
 {
-    SEI_ApplyAreaSettings( a_oCharacter, GetArea(a_oCharacter), a_nSettings );
+    SEI_ApplyAreaSettings( a_oCharacter, GetArea(a_oCharacter) );
 }
 
 
@@ -410,26 +205,6 @@ void Subraces_ChangeAreaSettings( object a_oCharacter, int a_nSettings = 0 )
 void Subraces_SafeRemoveEffect( object a_oCreature, effect a_eEffect )
 {
     SEI_RemoveEffect( a_oCreature, a_eEffect );
-}
-
-
-// A subrace safe version that removes all non-subrace effects from the char.
-//
-void Subraces_SafeRemoveEffects( object a_oCreature )
-{
-    SEI_RemoveEffects( a_oCreature );
-/*    object oExecutor = GetObjectByTag(KU_SUBRACES_PERM_TAG + IntToString(Random(10)));
-    SetLocalObject(oExecutor,"KU_CHARAKTER",a_oCreature);
-    SetLocalInt(oExecutor,"KU_INCLUDE_ITEMS",FALSE);
-    ExecuteScript("ku_subr_init_tr",oExecutor); */
-    object oPermEffect = GetLocalObject(GetModule(),KU_SUBRACES_PERM_FIELD);
-    AssignCommand( oPermEffect, SEI_InitSubraceTraits( a_oCreature, FALSE ) );
-//    SEI_InitSubraceTraits( a_oCreature, FALSE );
-}
-
-void Subraces_ModuleHeartBeat()
-{
-    ku_SubraceModuleHeartbeat();
 }
 
 
@@ -448,21 +223,14 @@ int Subraces_GetIsSubraceEffect(effect eBad) {
     return FALSE;
 }
 
-int Subrace_DMOnlyAllowed(object oPC, int iLoud=TRUE) {
- object oSoul = GetSoulStone(oPC);
+int Subrace_DMOnlyAllowed(object oPC, int iLoud=TRUE)
+{
 
- /* Check for bad duplicit characters */
- if(GetPersistentInt(oPC, "PLAYED") &&
-    !GetLocalInt(oSoul,"PLAYED")) {
 
-   SendMessageToAllDMs("Player "+GetPCPlayerName(oPC)+" logged with duplicit character "+GetName(oPC)+"!!!");
-   SpeakString("Chybna postava. Kontaktuj DM.");
-   return TRUE;
- }
-
-  switch(Subraces_GetCharacterSubrace(oPC)) {
-    case SUBRACE_HUMAN_AASIMAR:
-    case SUBRACE_HUMAN_TIEFLING:
+  switch(GetRacialType(oPC))
+  {
+    case RACIAL_TYPE_AASIMAR:
+    case RACIAL_TYPE_TIEFLING:
      if(iLoud) {
         SpeakString("Tato rasa je povolena jen se souhlasem DM. Pozadej DM, aby te vpustil do sveta.");
       }

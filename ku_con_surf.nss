@@ -8,8 +8,6 @@
 int StartingConditional()
 {
   object oPC = GetPCSpeaker();
-  int iSubrace = Subraces_GetCharacterSubrace( oPC );
-
   if( Subraces_GetIsCharacterFromUnderdark(oPC ) != 1 ) {
     return TRUE;
   }

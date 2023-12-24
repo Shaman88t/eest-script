@@ -8,10 +8,5 @@
 int StartingConditional()
 {
   object oPC = GetPCSpeaker();
-  if( (Subraces_IsCharacterOfSubrace(oPC, SUBRACE_ELF_DROW_ARISTOCRAT) ) ||
-      (Subraces_IsCharacterOfSubrace(oPC, SUBRACE_ELF_DROW           ) ) ||
-      (getFaction(oPC) == PRITEL                                       ) )
-    return TRUE;
-  else
-    return FALSE;
+  return Subraces_GetIsCharacterFromUnderdark(oPC);
 }

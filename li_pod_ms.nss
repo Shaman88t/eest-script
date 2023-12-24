@@ -8,12 +8,7 @@
 int StartingConditional()
 {
   object oPC = GetPCSpeaker();
-  int iSubrace = Subraces_GetCharacterSubrace( oPC );
-
-  if( ( iSubrace != SUBRACE_ELF_DROW_ARISTOCRAT         ) &&
-      ( iSubrace != SUBRACE_ELF_DROW                    ) &&
-      ( iSubrace != SUBRACE_DWARF_DUERGAR               ) &&
-      ( Subraces_GetIsCharacterFromUnderdark(oPC ) == 1 ) )
+  if(GetRacialType(oPC)==RACIAL_TYPE_SVIRFNEBLIN)
     return TRUE;
   else
     return FALSE;

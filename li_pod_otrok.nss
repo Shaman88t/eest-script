@@ -7,9 +7,7 @@
 
 int StartingConditional()
 {
-  object oPC = GetPCSpeaker();
-  if( getFaction(oPC) == OTROK )
+
     return TRUE;
-  else
-    return FALSE;
+
 }

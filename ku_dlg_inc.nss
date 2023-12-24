@@ -7,6 +7,7 @@
 #include "ku_persist_inc"
 #include "ku_libchat"
 #include "ku_resizer"
+#include "me_lib"
 //#include "me_pcneeds_inc"
 
 const int TOTAL_SKILLS = 27;
@@ -126,7 +127,7 @@ void ku_dlg_SetConv(int conv, int state) {
  **********************************************/
 void KU_DM_Wand_SetTokens(int iState, object oPC = OBJECT_INVALID) {
   object oTarget = GetLocalObject(GetPCSpeaker(),KU_WAND_TARGET );
-  object oSoul = SEI_GetSoul(oTarget);
+  object oSoul = GetSoulStone(oTarget);
 //  SetLocalInt(oPC,KU_DLG+"state",iState);
 //  SendMessageToPC(GetPCSpeaker(),"Tokens: state = "+IntToString(iState));
 
@@ -278,7 +279,7 @@ void KU_DM_Wand_SetTokens(int iState, object oPC = OBJECT_INVALID) {
 void KU_DM_Wand(int act) {
   object oPC = GetPCSpeaker();
   object oTarget = GetLocalObject(GetPCSpeaker(),KU_WAND_TARGET );
-  object oSoul = SEI_GetSoul(oTarget);
+  object oSoul = GetSoulStone(oTarget);
   int iState = GetLocalInt(oPC,KU_DLG+"state");
 //  SendMessageToPC(oPC,"state = "+IntToString(iState)+" act = "+IntToString(act));
   switch(iState) {

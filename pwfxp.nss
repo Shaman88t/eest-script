@@ -214,51 +214,13 @@ int PWFXP_GetLevel(object oPC)
     RetLevel = GetLevelByPosition(1,oPC) + GetLevelByPosition(2,oPC) + GetLevelByPosition(3,oPC);
   // Kucik zapocitej ECL
 //  return RetLevel + ku_GetECLClass(oPC);
-  return Subraces_GetEffectiveCharacterLevel(oPC);
+  return RetLevel;
 }
 
 // see PWFXP_LEVEL_MODIFIER constant description
 float PWFXP_GetLevelModifier(int nLevel)
 {
   return StringToFloat(GetSubString( PWFXP_LEVEL_MODIFIERS, (nLevel - 1) * 7, 6));
-}
-
-// see PWFXP_ECL_MODIFIERS constant description
-float PWFXP_GetECLModifier(object oPC)
-{
-  // get current
-//  return IntToFloat(ku_GetECLClass(oPC));
-
-  return 0.6;
-
-  int nHD  = ku_GetECLClass(oPC);
-
-  // get last PC HD from cache
-  int nECLHitDice = GetLocalInt(oPC,"PWFXP_ECL_HITDICE");
-
-  // last PC HD = current PC HD ? get ECL modifier from cache and return...
-  if(nECLHitDice == nHD)
-    return GetLocalFloat(oPC,"PWFXP_ECL_MODIFIER");
-
-  // recompute ECL modifier and cache it
-  // this code section will run only in the case of two circumstances:
-  //
-  // 1. first time kill
-  // 2. pc hitdice change (e.g. levelup)
-  float fECLMod;
-
-/*  int nPos = FindSubString(GetStringUpperCase(PWFXP_ECL_MODIFIERS)+"|", "-"+GetStringUpperCase(GetSubRace(oPC))+"|");
-  if(nPos != -1)
-    fECLMod = IntToFloat(nHD) / (IntToFloat(nHD) + StringToFloat(GetSubString(PWFXP_ECL_MODIFIERS,nPos-1,1)));
-  else
-    fECLMod = 1.0;
-*/
-
-
-  SetLocalFloat(oPC,"PWFXP_ECL_MODIFIER", fECLMod);
-  SetLocalInt(oPC,"PWFXP_ECL_HITDICE",nHD);
-
-  return fECLMod;
 }
 
 // see PWFXP_APL_REDUCTION & PWFXP_APL_NOXP constant description
@@ -363,8 +325,6 @@ int PWFXP_CheckDistance(object oDead, object oGroupMbr)
 // see PWFXP_USE_SETXP constant description
 void PWFXP_GiveXP(object oPC, int nXP)
 {
-  ku_ReduceXPForPlayer(oPC, nXP);
-
   if(PWFXP_USE_SETXP)
     SetXP(oPC, GetXP(oPC) + nXP);
   else
@@ -493,8 +453,6 @@ int CalculateXPforGrpMember(object oGroupMbr, object oDead, object oKiller, floa
       float fMiscModifier = PWFXP_GetMiscModifier(oGroupMbr, oKiller);
       // get group bonus modifier
       float fGroupBonusModifier = PWFXP_GetGroupBonusModifier(nGroupSize);
-      // get subrace ECL modifier
-      float fECLModifier = PWFXP_GetECLModifier(oGroupMbr);
 
       // redukce XP pri zabijeni stale stejnych priser
       float fMassModifier = GetMassModifier(oGroupMbr, oDead);
@@ -530,7 +488,7 @@ int CalculateXPforGrpMember(object oGroupMbr, object oDead, object oKiller, floa
       }
 
       // calculate final modifier
-      float fFinalModifier = fLevelModifier * fDistanceModifier * fCRModifier * fMiscModifier * fGroupBonusModifier * fECLModifier * fMassModifier * fBossModifier * XPPerBoost * extraExperience;
+      float fFinalModifier = fLevelModifier * fDistanceModifier * fCRModifier * fMiscModifier * fGroupBonusModifier * fMassModifier * fBossModifier * XPPerBoost * extraExperience;
 
       // debug
       if(PWFXP_DEBUG || bDEBUG )
@@ -542,7 +500,6 @@ int CalculateXPforGrpMember(object oGroupMbr, object oDead, object oKiller, floa
                                   "%] MISC ["+IntToString(FloatToInt((fMiscModifier-1)*100))+
                                   "%] GRP ["+IntToString(FloatToInt((fGroupBonusModifier-1)*100))+
 //                                  "%] ECL ["+IntToString(FloatToInt((fECLModifier-1)*100))+
-                                  "%] CONST ["+IntToString(FloatToInt((fECLModifier-1)*100))+
                                   "%] MASS ["+IntToString(FloatToInt((fMassModifier-1)*100))+
                                   "%] BOSS ["+IntToString(FloatToInt((fBossModifier-1)*100))+
                                   "%] BOOST ["+IntToString(FloatToInt((XPPerBoost-1)*100))+

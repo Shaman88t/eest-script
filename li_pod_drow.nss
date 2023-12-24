@@ -8,8 +8,7 @@
 int StartingConditional()
 {
   object oPC = GetPCSpeaker();
-  if( (Subraces_IsCharacterOfSubrace(oPC, SUBRACE_ELF_DROW_ARISTOCRAT) ) ||
-      (Subraces_IsCharacterOfSubrace(oPC, SUBRACE_ELF_DROW           ) ) )
+  if(GetRacialType(oPC)==RACIAL_TYPE_DROW)
     return TRUE;
   else
     return FALSE;
